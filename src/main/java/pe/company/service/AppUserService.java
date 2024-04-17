@@ -2,6 +2,7 @@ package pe.company.service;
 
 import java.util.HashSet;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -30,18 +31,14 @@ public class AppUserService {
 				.username(dto.username())
 				.password(passwordEncoder.encode(dto.password()))
 				.build();
-		
-		Set<EntityRole> roles = new HashSet<>();
-		dto.roles().forEach(r->{
-			EntityRole entityRole = repository.findByRole(Rolename.valueOf(r))
-					.orElseThrow(()-> new RuntimeException("el usuario no existe"));
-			roles.add(entityRole);
-		});
-		
+
+		Set<EntityRole> roles = dto.roles().stream()
+				.map(role ->EntityRole.builder().role(Rolename.valueOf(role))
+						.build())
+				.collect(Collectors.toSet());
+
 		appUser.setRoles(roles);
 		appUserRepository.save(appUser);
 		return new MessageDto("USER "+appUser.getUsername()+" guardado exitosamente");
-		
-		
 	}
 }

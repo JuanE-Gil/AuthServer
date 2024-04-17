@@ -24,8 +24,5 @@ public class ClientController {
 	public ResponseEntity<MessageDto> create(@RequestBody CreateClientDto dto){
 		
 		return ResponseEntity.status(HttpStatus.CREATED).body(clientService.create(dto));
-		
-		
 	}
-
 }

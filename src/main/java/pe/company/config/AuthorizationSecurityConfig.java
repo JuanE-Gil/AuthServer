@@ -64,7 +64,6 @@ public class AuthorizationSecurityConfig {
         return http.build();
     }
 
-
     @Bean
     public OAuth2TokenCustomizer<JwtEncodingContext> tokenCustomizer() {
         return context -> {
@@ -102,7 +101,6 @@ public class AuthorizationSecurityConfig {
         }
         return keyPair;
     }
-
 
     private RSAKey generateRSAKey() {
         KeyPair keyPair = generateKeyPair();
